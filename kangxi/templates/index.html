@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container pt-5 pb-5">
+
+        <div class="btn-group pt-5 pb-5" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="En" autocomplete="off" checked>
+        <label class="btn btn-outline-dark" for="En">En</label>
+        <input type="radio" class="btn-check" name="btnradio" id="Ru" autocomplete="off">
+        <label class="btn btn-outline-dark" for="Ru">Ru</label>
+        </div>
+
+        <p name="lang">This website presents practical tools for:</p>
+        <ul>
+            <li name="lang">studying Chinese characters</li>
+            <li name="lang">searching characters by components of their internal structure</li>
+            <li name="lang">searching characters by their English and Russian meanings</li>
+            <li name="lang">analysis of character sets grouped by their common roots or common meanings</li>
+        </ul>
+        <p name="lang">Character trees make it possible to order all characters into interrelated sequences solely on the basis of their internal structure.</p>
+        <p name="lang">The About page presents the results of ordering characters on the basis of their internal structure, which led to the development of the search and analysis Tools.</p>
+    </div>
+
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+<script>
+    document.getElementById('home').classList.add('active');
+
+    var language = {
+        en: ["This website presents practical tools for:",
+            "studying Chinese characters",
+            "searching characters by components of their internal structure",
+            "searching characters by their English and Russian meanings",
+            "analysis of character sets grouped by their common roots or common meanings",
+            "Character trees make it possible to order all characters into interrelated sequences solely on the basis of their internal structure.",
+            "The About page presents the results of ordering characters on the basis of their internal structure, which led to the development of the search and analysis Tools."],
+        ru: ["Этот сайт представляет практические инструменты для:",
+            "изучения китайских иероглифов",
+            "поиска иероглифов по компонентам их внутренней структуры", 
+            "поиска иероглифов по их английским и русским значениям", 
+            "анализа наборов иероглифов, объединенных общими корнями или общими значениями",
+            "Деревья иероглифов позволяют упорядочить их общую совокупность во взаимосвязанные последовательности только на основании их внутренней стуктуры.",
+            "На странице About изложены результаты работы по упорядочению иероглифов на основании их внутренней структуры, позволившие создать инструменты, реализованные в разделе Tools."]
+    };
+
+    var textToTranslate = document.getElementsByName("lang");
+
+    Ru.onclick = function() {
+      <!-- title.textContent = language.ru.title; -->
+      for (let i = 0; i < textToTranslate.length; i++) {
+        textToTranslate[i].textContent = language.ru[i];
+      }
+    };
+    En.onclick = function() {
+      for (let i = 0; i < textToTranslate.length; i++) {
+        textToTranslate[i].textContent = language.en[i];
+      }
+    };
+</script>
+{% endblock %}

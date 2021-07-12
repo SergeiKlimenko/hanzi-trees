@@ -1,0 +1,333 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<div class="accordion mt-2 pt-5" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+         Character analysis (search by character)
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+	    <div class="container">
+	      <div class="row">
+		<div class="col">
+	 	    <div class="bg-light p-5 rounded-lg m-3">
+		      <p>The meanings and structure of the character and the meanings of its structure elements</p>
+		      <hr>
+		      <form method="POST">
+		        {{ charSearchForm.csrf_token }}
+		        {{ wtf.form_field(charSearchForm.enterCharacter, data_bs_toggle="tooltip", title="Enter or copy a character/sequence of characters") }}
+			{{ wtf.form_field(charSearchForm.chooseCharacter, data_bs_toggle="tooltip", title="Select a character from the characters you entered to see its meanings") }}
+			{{ wtf.form_field(charSearchForm.chooseMeaning, data_bs_toggle="tooltip", title="Select a meaning of the character to see other characters with the same meaning") }}
+			{{ wtf.form_field(charSearchForm.structure, data_bs_toggle="tooltip", title="The character structure is shown here") }}
+			{{ wtf.form_field(charSearchForm.chooseStructureElement, data_bs_toggle="tooltip", title="Select a structure element to see its meaning") }}
+			{{ wtf.form_field(charSearchForm.elementMeanings, data_bs_toggle="tooltip", title="All meanings of the structure element of the character are shown here") }}
+		      </form>
+	   	    </div>
+		</div>
+		<div class="col">
+		    <div class="row">
+		        <div class="bg-light p-5 rounded-lg m-3">
+			  <p>Characters with the same meaning as the selected meaning of the analyzed character and all their meanings</p>
+			  <hr>
+			  <form method="POST">
+			    {{ synCharForm.csrf_token }}
+			    {{ wtf.form_field(synCharForm.chooseSynChar, data_bs_toggle="tooltip", title="Select a character from the list of characters with the same meaning to see all its meanings") }}
+			    {{ wtf.form_field(synCharForm.listMeanings, data_bs_toggle="tooltip", title="All meanings of the character selected from the list of characters with the same meaning") }}
+			  </form>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="bg-light p-5 rounded-lg m-3">
+			  <p>The tree containing the analyzed character and all meanings of the characters forming its trunk and branches</p>
+			  <hr>
+			  <form method="POST">
+			    {{ trForm.csrf_token }}
+			    {{ wtf.form_field(trForm.treeTrunk, data_bs_toggle="tooltip", title="Select a character from the list of all characters included in the trunk of the same tree (the tree root, branch roots, and characters not included in any branches) to see its meanings") }}
+			    {{ wtf.form_field(trForm.treeTrunkMeanings, data_bs_toggle="tooltip", title="All meanings of the character selected above") }}
+			    {{ wtf.form_field(trForm.branchRoots, data_bs_toggle="tooltip", title="Select a character from the list of branch roots to see its meanings and the list of all characters included in the branch") }}
+			    {{ wtf.form_field(trForm.branchRootsMeanings, data_bs_toggle="tooltip", title="All meanings of the branch root selected above") }} 
+			    {{ wtf.form_field(trForm.branchCharacters, data_bs_toggle="tooltip", title="Select a character from the list of characters included in the branch to see its meanings") }}
+			    {{ wtf.form_field(trForm.branchMeanings, data_bs_toggle="tooltip", title="All meanings of the character selected above from the list of characters included in the branch") }} 
+			  </form>
+		        </div>
+		    </div>
+		</div>
+	      </div>
+            </div>
+       </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Character analysis (search by structure elements)
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+	    <div class="container">
+	        <div class="row">
+		    <div class="col">
+		        <div class="bg-light p-5 rounded-lg m-3">
+			  <p>Character search by structure elements, its meanings, structure, and the meanings of its structure elements</p>
+			  <hr>
+			    <form method="POST">
+			        {{ charSearchForm.csrf_token }}
+				{{ wtf.form_field(charSearchForm.enterCharStructure, id="enterStructure2", data_bs_toggle="tooltip", title="Enter radicals/characters to find all characters whose structure includes the entered elements") }}
+				<p>
+  				  <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRadicals" aria-expanded="false" aria-controls="collapseRadicals">
+				    Radicals
+				  </button>
+				</p>
+				<div class="collapse" id="collapseRadicals">
+				  <div class="card card-body">
+				    <div class="d-flex flex-wrap">
+				          {% for n in range(rads|length) %}
+		                            {% set character = rads[n][1] %}
+		                            <button type="button" id="{{ character }}"  class="btn btn-outline-dark btn-sm" onclick="input(enterStructure2, this.id);">{{ character }}</button>
+	                                  {% endfor %}
+	    			    </div>
+				  </div>
+				</div>
+				{{ wtf.form_field(charSearchForm.chooseCharacter, id="chooseCharacter2", data_bs_toggle="tooltip", title="Select a charcter from the list of characters whose structure includes the elements entered above") }}
+				{{ wtf.form_field(charSearchForm.chooseMeaning, id="chooseMeaning2", data_bs_toggle="tooltip", title="Select a meaning of the character to see other characters with the same meaning") }}
+				{{ wtf.form_field(charSearchForm.structure, id="structure2", data_bs_toggle="tooltip", title="The character structure is shown here") }}
+				{{ wtf.form_field(charSearchForm.chooseStructureElement, id="chooseStructureElement2", data_bs_toggle="tooltip", title="Select a structure element to see its meaning") }}
+				{{ wtf.form_field(charSearchForm.elementMeanings, id="elementMeanings2", data_bs_toggle="tooltip", title="All meanings of the structure element of the character are shown here") }}
+			    </form>
+			</div>
+		    </div>
+		    <div class="col">
+		        <div class="row">
+			    <div class="bg-light p-5 rounded-lg m-3">
+			      <p>Characters with the same meaning as the selected meaning of the analyzed character and all their meanings</p>
+			      <hr>
+			        <form method="POST">
+				    {{ synCharForm.csrf_token }}
+				    {{ wtf.form_field(synCharForm.chooseSynChar, id="chooseSynChar2", data_bs_toggle="tooltip", title="Select a character from the list of characters with the same meaning to see all its meanings") }}
+				    {{ wtf.form_field(synCharForm.listMeanings, id="listMeanings2", data_bs_toggle="tooltip", title="All meanings of the character selected from the list of characters with the same meaning") }}
+				</form>
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="bg-light p-5 rounded-lg m-3">
+			      <p>The tree containing the analyzed character and all meanings of the characters forming its trunk and branches</p>
+			      <hr>
+			        <form method="POST">
+			            {{ trForm.csrf_token }}
+				    {{wtf.form_field(trForm.treeTrunk, id="treeTrunk2", data_bs_toggle="tooltip", title="Select a character from the list of all characters included in the trunk of the same tree (the tree root, branch roots, and characters not included in any branches) to see its meanings") }}
+				    {{ wtf.form_field(trForm.treeTrunkMeanings, id="treeTrunkMeanings2", data_bs_toggle="tooltip", title="All meanings of the character selected above") }}
+				    {{ wtf.form_field(trForm.branchRoots, id="branchRoots2", data_bs_toggle="tooltip", title="Select a character from the list of branch roots to see its meanings and the list of all characters included in the branch") }}
+				    {{ wtf.form_field(trForm.branchRootsMeanings, id="branchRootsMeanings2", data_bs_toggle="tooltip", title="All meanings of the branch root selected above") }}
+				    {{ wtf.form_field(trForm.branchCharacters, id="branchCharacters2", data_bs_toggle="tooltip", title="Select a character from the lit of characters included in the branch to see its meanings" ) }}
+				    {{ wtf.form_field(trForm.branchMeanings, id="branchMeanings2", data_bs_toggle="tooltip", title="All meanings of the character selected above from the list of characters included in the branch") }}
+				</form>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Search trees by root structure
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+	    <div class="container">
+	        <div class="bg-light p-5 rounded-lg m-3">
+		  <p>Tree/branch search by the structure of its root, characters included in the tree/branch and their meanings</p>
+		  <hr>
+		    <form method="POST">
+			{{ charSearchForm.csrf_token }}
+			{{ wtf.form_field(trSearchForm.enterStructure, id="enterStructure3", data_bs_toggle="tooltip", title="Enter radicals/characters to search for all tree roots or branch roots whose structure includes the entered elements") }}
+			<p>
+  			  <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRadicals2" aria-expanded="false" aria-controls="collapseRadicals2">
+			    Radicals
+			  </button>
+			</p>
+			<div class="collapse" id="collapseRadicals2">
+			  <div class="card card-body">
+			    <div class="d-flex flex-wrap">
+                              {% for n in range(rads|length) %}
+		                {% set character = rads[n][1] %}
+		                <button type="button" id="{{ character }}"  class="btn btn-outline-dark btn-sm" onclick="input(enterStructure3, this.id);">{{ character }}</button>
+	                      {% endfor %}
+	    		    </div>
+			  </div>
+			</div>
+			{{ wtf.form_field(trSearchForm.chooseStructureElement, id="chooseStructureElement3", data_bs_toggle="tooltip", title="Select an element from the elements entered above to see its meanings") }}
+			{{ wtf.form_field(trSearchForm.elementMeanings, id="elementMeanings3", data_bs_toggle="tooltip", title="All meanings of the structure element selected above") }}
+			{{ wtf.form_field(trSearchForm.rootList, id="rootList3", data_bs_toggle="tooltip", title="Select a character from the list of all tree roots and branch roots whose structure includes the entered elements to see its meanings and the tree or branch that it derives") }}
+			{{ wtf.form_field(trSearchForm.rootListMeanings, id="listMeanings3", data_bs_toggle="tooltip", title="All meanings of the tree root or branch root selected above") }}
+			{{ wtf.form_field(trSearchForm.treeList, id="tree3", data_bs_toggle="tooltip", title="Select a character from the list of all characters derived from the tree root or branch root selected above to see its meanings") }}
+			{{ wtf.form_field(trSearchForm.treeCharMeanings, id="treeCharMeanings3", data_bs_toggle="tooltip", title="All meanings of the character selected above") }}
+		    </form>
+		</div>
+	    </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+	<h2 class="accordion-header" id="headingFour">
+	    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+		Character search by meaning
+	    </button>
+	</h2>
+	<div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+	    <div class="accordion-body">
+	        <div class="container">
+		    <div class="bg-light p-5 rounded-lg m-3">
+		      <p>Search characters by (parts of) their meanings</p>
+		      <hr>
+		        <form method="POST">
+			    {{ charSearchForm.csrf_token }}
+			    {{ wtf.form_field(meanSearchForm.enterMeaning, id="enterMeaning4", data_bs_toggle="tooltip", title="Enter a string to find all meanings containing the string") }}
+				    {{ wtf.form_field(meanSearchForm.wholeWord, checked="checked") }}
+				<div class="col-md-2">
+				    {{ wtf.form_field(meanSearchForm.submit, id="submit4", class="btn btn-dark", type="button") }}
+				</div>
+			    {{ wtf.form_field(meanSearchForm.allMeanings, id="allMeanings4", data_bs_toggle="tooltip", title="Select a meaning to find all characters sharing this meaning") }}
+			    {{ wtf.form_field(meanSearchForm.chooseCharacter, id="chooseSynChar4", data_bs_toggle="tooltip", title="Select a character from the list of all characters sharing the meaning selected above to see all its meanings") }}
+			    {{ wtf.form_field(meanSearchForm.listMeanings, id="listMeanings4", data_bs_toggle="tooltip", title="All meanings of the character selected above") }}
+			</form>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+<script>
+    document.getElementById('tools').classList.add('active');
+
+    enterCharacter.oninput = function() {
+        getListOptions(enterCharacter, chooseCharacter);
+    };
+
+    enterCharacter.onchange = function() {
+        getListOptions(enterCharacter, chooseCharacter);
+    };
+
+    chooseCharacter.onchange = function() {
+        getListOptions(chooseCharacter, chooseMeaning);
+    };
+
+    chooseMeaning.onchange = function() {
+        getListOptions(chooseMeaning, chooseSynChar);
+    };
+
+    chooseSynChar.onchange = function() {
+        getValue(chooseSynChar, listMeanings);
+    };
+
+    chooseStructureElement.onchange = function() {
+        getValue(chooseStructureElement, elementMeanings);
+    };
+
+    treeTrunk.onchange = function() {
+        getValue(treeTrunk, treeTrunkMeanings);
+    };
+
+    branchRoots.onchange = function() {
+        getListOptions(branchRoots, branchCharacters);
+    };
+
+    branchCharacters.onchange = function() {
+        getValue(branchCharacters, branchMeanings);
+    };
+
+
+    enterStructure2.oninput = function() {
+	getListOptions(enterStructure2, chooseCharacter2);
+    };
+
+    enterStructure2.onchange = function() {
+	getListOptions(enterStructure2, chooseCharacter2);
+    };
+
+    chooseCharacter2.onchange = function() {
+	getListOptions(chooseCharacter2, chooseMeaning2);
+    };
+
+    chooseMeaning2.onchange = function() {
+        getListOptions(chooseMeaning2, chooseSynChar2);
+    };
+
+    chooseSynChar2.onchange = function() {
+	getValue(chooseSynChar2, listMeanings2);
+    };
+
+    chooseStructureElement2.onchange = function() {
+        getValue(chooseStructureElement2, elementMeanings2);
+    };
+
+    treeTrunk2.onchange = function() {
+        getValue(treeTrunk2, treeTrunkMeanings2);
+    };
+
+    branchRoots2.onchange = function() {
+        getListOptions(branchRoots2, branchCharacters2);
+    };
+
+    branchCharacters2.onchange = function() {
+        getValue(branchCharacters2, branchMeanings2);
+    };
+
+
+    enterStructure3.oninput = function() {
+        getListOptions(enterStructure3, chooseStructureElement3);
+    };
+
+    enterStructure3.onchange = function() {
+        getListOptions(enterStructure3, chooseStructureElement3);
+    };
+
+    chooseStructureElement3.onchange = function() {
+	getValue(chooseStructureElement3, elementMeanings3);
+    };
+
+    rootList3.onchange = function() {
+        getValue(rootList3, listMeanings3);
+	getListOptions(rootList3, tree3);
+    };
+
+    tree3.onchange = function() {
+ 	getValue(tree3, treeCharMeanings3);
+    };
+
+
+    wholeWord.onchange = function() {
+        if (wholeWord.value === 'y') {
+	    wholeWord.value = 'n'
+	} else if (wholeWord.value === 'n') {
+	    wholeWord.value = 'y'
+	};
+    };
+
+    submit4.onclick = function() {
+	getListOptions(enterMeaning4, allMeanings4, wholeWord.value);
+    };
+
+    allMeanings4.onchange = function() {
+	getListOptions(allMeanings4, chooseSynChar4);
+    };
+
+    chooseSynChar4.onchange = function() {
+	getValue(chooseSynChar4, listMeanings4);
+    };
+
+</script>
+{% endblock %}

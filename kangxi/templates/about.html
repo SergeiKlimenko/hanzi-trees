@@ -1,0 +1,706 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container pt-5 pb-5">
+
+        <div class="btn-group pt-5 pb-5" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio" id="En" autocomplete="off" checked>
+          <label class="btn btn-outline-dark" for="En">En</label>
+          <input type="radio" class="btn-check" name="btnradio" id="Ru" autocomplete="off">
+          <label class="btn btn-outline-dark" for="Ru">Ru</label>
+        </div>
+
+        <h2 class="pb-3" name="lang">A method of ordering Chinese characters using structural sequences of their components</h2>
+        <h5 class="pb-3" name="lang">Boris Klimenko</h5>
+        <p name="lang">The issue of ordering Chinese characters in dictionaries remains problematic. Despite the fact that most characters contain regularly occurring components consisting of several elements, there have been no ordering methods that would be able to group characters with common components together and automate such ordering with the help of the standard sorting procedure. This project aims at providing such a method.</p>
+        <p name="lang">A character can consist of two types of components: radicals and other characters. Radicals (Kangxi character keys) comprise a set of 214 characters, arranged in ascending order of the number of strokes. In addition to the standard style adopted in the Kangxi dictionary, many radicals have several other variants used in individual characters. For example, the standard style radical 人 can be represented in characters as 亻, the radical 乙 as 乚, the radical 手 as 扌, etc. However, the structural sequences used for character ordering (discussed below) employ only standard variants of radicals, while alternative styles are used only in characters themselves. The complete list of standard and nonstandard options of radical styles is given in the Appendix. Radicals, together with their variants, are assumed here to be the smallest indivisible unit of the structure of any character.</p>
+        <p name="lang">The structural sequence of a character is the combination of radicals and characters included in it ordered in the manner described below.</p>
+        <p name="lang">Characters with the simplest structure contain only two radicals. The structural sequence of the components of a two-radical character consists of the two radicals included in it in their standard style and the character itself. The character itself is included in the sequence in order to differentiate the structural sequences of different characters consisting of the same radicals, for example:</p>
+        <p>丿丿乂 vs. 丿丿𠂆</p>
+        <p>一木未 vs. 一木末 vs. 一木本</p>
+        <p name="lang">In two-radical characters with horizontal or vertical arrangement of radicals, the left or the bottom radical is assumed to be the first element of the structural sequence, while the right or top radical is assumed to be the second one.</p>
+        <p name="lang">When a character is formed through insertion of one radical into another (e.g. 冂 一 𠔼, 囗 靑 圊) or their intersection (e.g. 囗 丨 中, 亠 冂 丹, 二 冂 冄), the following rule applies. The first radical of the sequence is the radical that forms the leftmost or bottom part of the character (with priority given to the left side). If the top part of either of the radicals is at the top of the character, this radical is the second one: (e.g. 一 木 未, 一 木 末, 一 木本). Radicals located within a closed radical are placed second (e.g. 卩 丶 卪, 囗 人 囚, 尸 丨 𠃜). Radicals with an open right bottom part go first in the sequence (e.g. 尸 二 𡰥, 广 匕 庀, 疒 匕 疕, 疒 矢 疾). Radicals that do not have an open bottom part in their standard style but partially compress in a manner that creates such a part when combined with another radical are placed second in the sequence (e.g. 火 鹿 麃, 石 麻 磨, 禾 鹿 麇).</p>
+        <p name="lang">Decomposition of most two-radical characters into component radicals is straightforward. Ambiguous cases are resolved with the help of the rare variants of radical styles, whose complete list is given in the Appendix.</p>
+        <p name="lang">Two-radical characters comprise about 18% (1,808 characters) of the character sample used here (10,181 characters, not including 214 radicals).</p>
+        <p name="lang">38% of two-radical characters (683 characters) are components of other more complex characters. The following is a complete list of structural sequences of such characters (6.7% of the total number of characters), arranged in ascending order of the numbers of the two component radicals:</p>
+      <p>
+        <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwoRadRoots" aria-expanded="false" aria-controls="collapseTwoRadRoots" name="lang">
+          Two-radical roots
+        </button>
+      </p>
+      <div class="collapse" id="collapseTwoRadRoots">
+        <div class="card card-body">
+          <ol>
+            <div class="row">
+              {% for i in range(5) %}
+                <div class="col">
+                  {% for char in twoRadRoots[115*i:115*i+115] %}
+                    <li>
+                      {{ char }}
+                    </li>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+              <div class="col">
+                {% for char in twoRadRoots[115*5:] %}
+                  <li>
+                    {{ char }}
+                  </li>
+                {% endfor %}
+              </div>
+            </div>
+          </ol>  
+        </div>
+      </div>
+            <p name="lang">Each character from the list above is included in some other characters. For instance, 斬 is part of the following more complex characters:</p>
+            <p>塹 鏨 嶄 摲 漸 獑 䁪 慙 暫 槧 聻 魙</p>
+            <p name="lang">Structural sequences of each character from this list begin with a structural sequence of the two-radical character included in each of them, i.e. 車 斤 斬.</p>
+            <p name="lang">For instance, the structural sequence of the character 塹 starts with the structural sequence of the character 斬, i.e. 車 斤 斬, followed by the radical 土 and concluded with the final character itself: 車 斤 斬 土 塹.</p>
+            <p name="lang">Another example is the character 鏨, which has the following structural sequence: the radical 金 is added to the structural sequence of the common element, i.e. 車 斤 斬, followed by the character 鏨 itself: 車 斤 斬 金 鏨.</p>
+            <p name="lang">Below are several more examples of structural sequences of different characters:</p>
+            <ul>
+            <div class="row">
+              <div class="col">
+                <li>嶄: 車 斤 斬 + 山 + 嶄 = 車 斤 斬 山 嶄</li>
+                <li>摲: 車 斤 斬 + 手 + 摲 = 車 斤 斬 手 摲</li>
+                <li>漸: 車 斤 斬 + 水 + 漸 = 車 斤 斬 水 漸</li>
+                <li>獑: 車 斤 斬 + 犬 + 獑 = 車 斤 斬 犬 獑</li>
+                <li>䁪: 車 斤 斬 + 目 + 䁪 = 車 斤 斬 目 䁪</li>    
+              </div>
+              <div class="col">
+                <li>慙: 車 斤 斬 + 心 + 慙 = 車 斤 斬 心 慙</li>
+                <li>暫: 車 斤 斬 + 日 + 暫 = 車 斤 斬 日 暫</li>
+                <li>槧: 車 斤 斬 + 木 + 槧 = 車 斤 斬 木 槧</li>
+                <li>聻: 車 斤 斬 + 水 + 漸 + 耳 + 聻 =  車 斤 斬 水 漸 耳 聻</li>
+                <li>魙: 車 斤 斬 + 水 + 漸 + 鬼 + 魙 =  車 斤 斬 水 漸 鬼 魙</li>
+              </div>
+            </div>
+          </ul>
+            <p name="lang">The lists above are sorted in ascending order of the numbers of all component radicals and characters (their hexadecimal Unicode codes). The output is an ordered list of characters containing the two-radical character 斬:</p>
+            <p>斬 塹 嶄 慙 摲 暫 槧 漸 聻 魙 獑 䁪 鏨.</p>
+            <p name="lang">Structural sequences of all characters that include two-radical characters as their components are formed in the same manner.</p>
+            <p name="lang">Sorting all such structural sequences results in the following set of lists for each two-radical character (indicated at the beginning of each list), covering 80% of the character sample:</p>            
+            <p>
+              <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwoRadTrees" aria-expanded="false" aria-controls="collapseTwoRadTrees" name="lang">
+                Trees stemming from two-radical roots
+              </button>
+            </p>
+            <div class="collapse" id="collapseTwoRadTrees">
+              <div class="card card-body">
+                <ol>
+                  {% for line in twoRadTrees %}
+                    <li>
+                      <div class="row">
+                        <div class="col-1">
+                          {{ line[0] }}
+                        </div>
+                        <div class="col">
+                          {{ line[2:] }}
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ol>
+              </div>
+            </div>
+                <p name="lang">As a result of this procedure, 80% of all characters are arranged in an ordered sequence.</p>
+                <p name="lang">The remaining 20% include two-radical characters that are not included in any other character (11%), characters whose common element consists of three or more radicals, rather than only two (8.8%), and single characters of three or more radicals (0.2%).</p>
+                <p name="lang">The following list shows structural sequences of two-radical characters that are not included in any other character as a component (11% of the total number of characters):</p>
+                <p>
+                  <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwoRadStumps" aria-expanded="false" aria-controls="collapseTwoRadStumps" name="lang">
+                    Two-radical stumps
+                  </button>
+                </p>
+                <div class="collapse" id="collapseTwoRadStumps">
+                  <div class="card card-body">
+                    <ol>
+                      <div class="row">
+                        {% for i in range(5) %}
+                          <div class="col">
+                            {% for char in twoRadStumps[188*i:188*i+188] %}
+                              <li>
+                                {{ char }}
+                              </li>
+                            {% endfor %}
+                          </div>
+                        {% endfor %}
+                        <div class="col">
+                          {% for char in twoRadStumps[188*5:] %}
+                            <li>
+                              {{ char }}
+                            </li>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </ol>
+                  </div>
+                </div>
+                    <p name="lang">The last group (8.8% of the total) consists of characters whose common element is formed of three or more radicals, and single characters that are formed of three or more radicals but not included in any other characters as a common element (0.2%).</p>
+                    <p name="lang">Structural sequences of characters consisting of three or more radicals are formed based on the position of the radicals within the character. The sequence starts with the leftmost or bottom radical and proceeds in the direction of the nearest radical adjacent to it.</p>
+                    <p name="lang">The list of structural sequences of characters with three or more radicals, together with characters that include them as their common element, is given below:</p>
+                    <p>
+                      <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreeRadTrees" aria-expanded="false" aria-controls="collapseThreeRadTrees" name="lang">
+                        Trees stemming from roots composed of three or more radicals
+                      </button>
+                    </p>
+                    <div class="collapse" id="collapseThreeRadTrees">
+                      <div class="card card-body">
+                        <ol>
+                          <div class="row">
+                            {% for i in range(2) %}
+                              <div class="col">
+                                {% for line in threeRadTrees[i*40:i*40+40] %}
+                                  <li>
+                                  <div class="row">
+                                    <div class="col-4">
+                                      {{ line[0] }}
+                                    </div>
+                                    <div class="col">
+                                      {{ line[1] }}
+                                    </div>
+                                  </div>
+                                  </li>
+                                {% endfor %}
+                              </div>
+                            {% endfor %}
+                          </div>
+                        </ol>    
+                      </div>
+                    </div>                  
+                        <p name="lang">The following is the list of single characters consisting of three or more radicals that are not included in any other character as their common element:</p>
+                        <p>
+                          <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreeRadStumps" aria-expanded="false" aria-controls="collapseThreeRadStumps" name="lang">
+                            Three or more-radical stumps
+                          </button>
+                        </p>
+                        <div class="collapse" id="collapseThreeRadStumps">
+                          <div class="card card-body">
+                            <ol>
+                              <div class="row">
+                              <div class="col">
+                                <li>一乙一与</li>
+                                <li>丨入人𠁥</li>
+                                <li>丶丶丶𠁼</li>
+                                <li>丶力丶办</li>
+                                <li>丿亅一丶㐧</li>
+                                <li>匕匕匕㐂</li>
+                                <li>匚儿己𠑹</li>
+                                <li>巛乙目𥄉</li>
+                                <li>巛口人侃</li>
+                                <li>工臼殳毁</li>
+                                <li>廾水頁頮</li>
+                              </div>
+                              <div class="col">
+                                <li>彳夊幺後</li>
+                                <li>无无鬲鬵</li>
+                                <li>日口亠亯</li>
+                                <li>日日日晶</li>
+                                <li>水又勹沒</li>
+                                <li>水缶爪滛</li>
+                                <li>疒龠自㿜</li>
+                                <li>皿心宀寍</li>
+                                <li>米糸廾彐彝</li>
+                                <li>言缶爪謡</li>
+                                <li>金金金鑫</li>
+                              </div>
+                              </div>
+                            </ol>    
+                          </div>
+                        </div> 
+                            <p name="lang">The algorithm presented above orders 100% of the characters. The place of each character is determined by the order of the radicals (radical numbers) in their structural sequences sorted together (for two-radical roots, including two-radical single characters) and roots having 3 or more radicals (including single characters).</p>
+                            <p name="lang">The ordering using structural sequences reveals several features of the entire set of characters.</p>
+                            <p name="lang">A group of characters that makes up 7.4% of the total number of characters (763 out of 10181) consists of characters that are included as a common element in 89% of all characters (characters of this group are part of one to over 200 other characters). Characters from this group are referred to as “roots” hereafter. Sequences of characters including any of such roots are labelled as “trees”.</p>
+                            <p name="lang">This way of ordering characters is different from the existing methods employed in dictionaries. In dictionaries built according to the Russian graphic system, for example (Oshanin 1983), characters are ordered by the type of the element located in the bottom right corner of the character. This method does not allow to group characters with a common element together, thus overlooking the tree-like structure of such character groups, which, when ordered by their structural sequences, represent trees having a trunk root, trunk, branch roots, and branches.</p>
+                            <p name="lang">In addition, such groups in (Oshanin 1983) do not include all the characters that include the common element, because they contain only characters with the same stroke in the bottom right corner: e.g. the sequence 酋 崷 鞧 輶 猶 蕕 楢 緧 鰌 蝤 contains characters that include the character 酋 in (Oshanin 1983, vol. 2: 705–706). The remaining characters that contain the same character as their common element are scattered across different volumes and pages of the dictionary:</p>
+                            <ul>
+                              <div class="row">
+                                <div class="col">
+                                  <li name="lang">奠 - Volume 3, Page 636</li>
+                                  <li name="lang">鄭 - Volume 2, Page 788</li>
+                                  <li name="lang">擲 - Volume 2, Page 789</li>
+                                  <li name="lang">尊 - Volume 3, Page 53</li>
+                                  <li name="lang">僔 - Volume 3, Page 55</li>
+                                  <li name="lang">撙 - Volume 3, Page 55</li>
+                                  <li name="lang">樽 - Volume 3, Page 55</li>    
+                                </div>
+                                <div class="col">
+                                  <li name="lang">蹲 - Volume 3, Page 55</li>
+                                  <li name="lang">遵 - Volume 4, Page 118</li>
+                                  <li name="lang">鐏 - Volume 3, Page 54</li>
+                                  <li name="lang">鱒 - Volume 3, Page 55</li>
+                                  <li name="lang">鷷 - Volume 3, Page 516</li>
+                                  <li name="lang">猷 - Volume 3, Page 648</li>
+                                  <li name="lang">遒 - Volume 4, Page 100</li>
+                                </div>
+                              </div>
+                            </ul>
+                            <p name="lang">Ordering by structural sequences arranges all characters with the same root in one group, regardless of what stroke is located in their bottom right corner:</p>
+                            <table>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td>擲</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>蕕</td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td>^</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>^</td>
+                              </tr>
+                              <tr>
+                                <td>酋:</td>
+                                <td>奠</td>
+                                <td>鄭</td>
+                                <td>尊</td>
+                                <td>崷</td>
+                                <td>楢</td>
+                                <td>猶</td>
+                                <td>猷</td>
+                                <td>緧</td>
+                                <td>蝤</td>
+                                <td>輶</td>
+                                <td>遒</td>
+                                <td>鞧</td>
+                                <td>鰌</td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>v</td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>僔</td>
+                                <td>撙</td>
+                                <td>樽</td>
+                                <td>蹲</td>
+                                <td>遵</td>
+                                <td>鐏</td>
+                                <td>鱒</td>
+                                <td>鷷</td>
+                              </tr>
+                            </table>
+                            <p name="lang">Here, 酋 is the root of the tree, consisting of two radicals 酉 and 八;</p>
+                            <p name="lang">      奠 鄭 尊 崷 楢 猶 猷 緧 蝤 輶 遒 鞧 鰌 is the tree trunk;</p>
+                            <p name="lang">	  鄭, 尊, 猶 are branch roots;</p>
+                            <p name="lang">      擲, 僔 撙 樽 蹲 遵 鐏 鱒 鷷, 蕕 are the branches.</p>
+                            <p name="lang">Tree structures are formed automatically when characters are ordered according to their structural sequences. In the illustrations of the tree composition for all the roots given in this description, the trees are shown in the form of lists of characters without highlighting the branches (the branches are included in the tree trunks directly behind the roots of the branches). The following is an illustration of a linear structure of a tree with branches enclosed in square brackets:</p>
+                            <p>奠 鄭 [擲] 尊 [僔 撙 樽 蹲 遵 鐏 鱒 鷷] 崷 楢 猶 [蕕] 猷 緧 蝤 輶 遒 鞧 鰌.</p>
+                            <p name="lang">Structural sequences allow to place each character in its unique position within a tree, as well as make search for any character in trees of any size faster. This leads to the possibility to significantly improve the usability of printed dictionaries and simplify the algorithms in their electronic implementation.</p>
+                            <p name="lang">Basing a dictionary on roots ordered by their structural sequences allows to improve the structure of printed dictionaries, and organize their table of contents in a more convenient form. This can greatly improve the whole process of character search. Examples of such a table of contents are given above. Single characters that are not included in any others are referred to as single roots (single pairs — in the case of a two-radical root). They are also included in the general sequence of roots in the dictionary table of contents.</p>
+                            <p name="lang">Both in electronic and printed dictionaries, this root ordering method allows to arrange all roots (both forming trees and single) in a matrix, (given that the vast majority of such roots consist of two radicals), which is the most rational structure in this case from the point of view of ease of processing and perception.</p>
+                            <p name="lang">The roots are placed in a 214x214 matrix (total number of the radicals). The row and column indices in the matrix are the radicals ordered in ascending order of their numbers. Each root in the matrix is either associated with a corresponding tree or is a single.</p>
+                            <p name="lang">The root matrix allows to arrange 100% of characters to be included in a dictionary, regardless of their total number.</p>
+                            <p name="lang">The position of roots in the matrix is based on their structural sequences. For two-radical roots, the first radical defines the row, while the second one defines the column. Roots consisting of more than two radicals are placed in several matrix cells depending on the number of their radicals that are pairwise adjacent to each other. For example, the root 眞 with the structural sequence 八 乙 目 匕 眞 is placed in three cells: 12 八 - 5 乙, 5 乙 - 109 目 and 109 目 - 21 匕, where the number stands for the radical number.</p>
+                            <p name="lang">The order of radicals within a structural sequence can be different. The first radical in the sequence may be the leading radical of the root. It is possible to put in the first place the radical located in the top or rightmost part of the character. Any other conditions for their location can be added in the case of insertion or intersection of radicals or when there are three or more radicals in the root. However, all these modifications will only change the distribution of roots in the matrix, without changing the composition and structure of trees. But they will violate the natural logic of constructing structural sequences of roots, which locates the roots along the rows and columns of the matrix and does not require additional information about leading radicals of each character.</p>
+                            <h4 name="lang">Literature:</h4>
+                            <p name="lang">1. Oshanin, I. M. 1983. Large Sino-Russian Dictionary. Moscow: Nauka.</p>
+                            <h4 name="lang">Appendix:</h4>
+                            <p>
+                              <button class="btn btn-outline-dark mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRadList" aria-expanded="false" aria-controls="collapseRadList" name="lang">
+                                List of radicals with variants of styles in Chinese characters
+                              </button>
+                            </p>
+                            <div class="collapse" id="collapseRadList">
+                              <div class="card card-body">
+                                <ol>
+                                  <div class="row">
+                                    <div class="col">
+                                      <li>一</li>
+                                      <li>丨</li>
+                                      <li>丶</li>
+                                      <li>丿乀乁</li>
+                                      <li>乚乛乙𠃉𠃊𠃋𠃌𠃍𠃎𠃑⺄㇉㇇</li>
+                                      <li>亅𠄌</li>
+                                      <li>二𠄞𠄟𠄠</li>
+                                      <li>亠</li>
+                                      <li>人亻𠆢𠂉</li>
+                                      <li>儿</li>
+                                      <li>入</li>
+                                      <li>八丷</li>
+                                      <li>冂</li>
+                                      <li>冖</li>
+                                      <li>冫⺀</li>
+                                      <li>几𠘧𠘨</li>
+                                      <li>凵𠙴</li>
+                                      <li>刀刁刂𠚣⺈</li>
+                                      <li>力</li>
+                                      <li>勹</li>
+                                      <li>匕𠤎</li>
+                                      <li>匚𠤬</li>
+                                      <li>匸</li>
+                                      <li>十</li>
+                                      <li>卜⺊</li>
+                                      <li>卩㔾</li>
+                                      <li>厂</li>
+                                      <li>厶</li>
+                                      <li>又</li>
+                                      <li>口</li>
+                                      <li>囗</li>
+                                      <li>土</li>
+                                      <li>士</li>
+                                      <li>夂𡕒</li>
+                                      <li>夊</li>
+                                      <li>夕</li>
+                                      <li>大夨</li>
+                                      <li>女</li>
+                                      <li>子孑孒孓𡤼</li>
+                                      <li>宀</li>
+                                      <li>寸</li>
+                                      <li>小𡭔⺌⺍</li>
+                                      <li>尢尣𡯁𡯂</li>
+                                      <li>尸𡰣</li>
+                                      <li>屮𡳾屮屮</li>
+                                      <li>山</li>
+                                      <li>巛巜川𡿨𡿦</li>
+                                      <li>工</li>
+                                      <li>己已巳コ</li>
+                                      <li>巾</li>
+                                      <li>干</li>
+                                      <li>幺乡</li>
+                                      <li>广</li>
+                                      <li>廴</li>
+                                    </div>
+                                    <div class="col">
+                                      <li>廾𢌬</li>
+                                      <li>弋𢍺</li>
+                                      <li>弓𢎗𢎘</li>
+                                      <li>彐彑</li>
+                                      <li>彡</li>
+                                      <li>彳</li>
+                                      <li>心忄𢖩㣺</li>
+                                      <li>戈</li>
+                                      <li>戶户戸</li>
+                                      <li>手扌才龵</li>
+                                      <li>支</li>
+                                      <li>攴攵</li>
+                                      <li>文</li>
+                                      <li>斗𣁬</li>
+                                      <li>斤𣂑</li>
+                                      <li>方</li>
+                                      <li>无旡</li>
+                                      <li>日⺜</li>
+                                      <li>曰</li>
+                                      <li>月</li>
+                                      <li>木朩𣎳𣎴</li>
+                                      <li>欠</li>
+                                      <li>止龰𣥂</li>
+                                      <li>歹歺𣦶𣦵</li>
+                                      <li>殳</li>
+                                      <li>毋毌𣫬</li>
+                                      <li>比</li>
+                                      <li>毛𣬛</li>
+                                      <li>氏</li>
+                                      <li>气</li>
+                                      <li>水氵氺𣱱</li>
+                                      <li>火灬</li>
+                                      <li>爪爫爫𤓰𤓯</li>
+                                      <li>父</li>
+                                      <li>爻</li>
+                                      <li>爿𤕪丬</li>
+                                      <li>片</li>
+                                      <li>牙㸦</li>
+                                      <li>牛牜</li>
+                                      <li>犬犭</li>
+                                      <li>玄𤣥</li>
+                                      <li>玉王𤣩</li>
+                                      <li>瓜</li>
+                                      <li>瓦</li>
+                                      <li>甘𤮺</li>
+                                      <li>生𤯓</li>
+                                      <li>用甩</li>
+                                      <li>田由甲申甴电𤰒</li>
+                                      <li>疋𤴓𤴔</li>
+                                      <li>疒</li>
+                                      <li>癶</li>
+                                      <li>白</li>
+                                      <li>皮</li>
+                                      <li>皿</li>
+                                    </div>
+                                    <div class="col">
+                                      <li>目</li>
+                                      <li>矛</li>
+                                      <li>矢</li>
+                                      <li>石</li>
+                                      <li>示礻𥘅</li>
+                                      <li>禸</li>
+                                      <li>禾𥝌</li>
+                                      <li>穴𥤢</li>
+                                      <li>立</li>
+                                      <li>竹𥫗</li>
+                                      <li>米</li>
+                                      <li>糸糹纟</li>
+                                      <li>缶𦈢</li>
+                                      <li>网罒㓁罓䍏𦉪𦉫𦉭𦉰</li>
+                                      <li>羊𦍌𦍍𦍋</li>
+                                      <li>羽羽</li>
+                                      <li>老耂考老</li>
+                                      <li>而𦓐</li>
+                                      <li>耒𦓤</li>
+                                      <li>耳</li>
+                                      <li>聿肀𦘒</li>
+                                      <li>肉⺼</li>
+                                      <li>臣𦣞</li>
+                                      <li>自𦣹</li>
+                                      <li>至𦤳𦤴</li>
+                                      <li>臼𦥑𦥒𦥓</li>
+                                      <li>舌</li>
+                                      <li>舛</li>
+                                      <li>舟𠂨</li>
+                                      <li>艮</li>
+                                      <li>色</li>
+                                      <li>艸艹艹艹䒑</li>
+                                      <li>虍</li>
+                                      <li>虫</li>
+                                      <li>血</li>
+                                      <li>行</li>
+                                      <li>衣衤𧘇</li>
+                                      <li>襾西覀</li>
+                                      <li>見见見</li>
+                                      <li>角𧢲</li>
+                                      <li>言訁讠𧥛𧥜</li>
+                                      <li>谷𧮫</li>
+                                      <li>豆</li>
+                                      <li>豕𧰧𧰨</li>
+                                      <li>豸</li>
+                                      <li>貝贝</li>
+                                      <li>赤</li>
+                                      <li>走𧺆赱</li>
+                                      <li>足𧾷</li>
+                                      <li>身𨈏𨈐𨈑</li>
+                                      <li>車车車</li>
+                                      <li>辛𨐋</li>
+                                      <li>辰辰𨑃𨑄</li>
+                                      <li>辵辶𠔇辶</li>
+                                    </div>
+                                    <div class="col">
+                                      <li>邑𨙨</li>
+                                      <li>酉</li>
+                                      <li>釆</li>
+                                      <li>里里</li>
+                                      <li>金釒钅金</li>
+                                      <li>長镸长𨱘𨱗</li>
+                                      <li>門门𨳈𨳇</li>
+                                      <li>阜阝𨸏</li>
+                                      <li>隶</li>
+                                      <li>隹</li>
+                                      <li>雨</li>
+                                      <li>靑青</li>
+                                      <li>非</li>
+                                      <li>面靣𠚑</li>
+                                      <li>革</li>
+                                      <li>韋韦</li>
+                                      <li>韭</li>
+                                      <li>音</li>
+                                      <li>頁𩑋页</li>
+                                      <li>風风</li>
+                                      <li>飛飞𩙱</li>
+                                      <li>食飠𠋑𩙿饣𩚀𩚁𩚃</li>
+                                      <li>首𩠐</li>
+                                      <li>香</li>
+                                      <li>馬𩡧马</li>
+                                      <li>骨</li>
+                                      <li>高髙</li>
+                                      <li>髟</li>
+                                      <li>鬥𩰊𩰋</li>
+                                      <li>鬯</li>
+                                      <li>鬲</li>
+                                      <li>鬼</li>
+                                      <li>魚鱼𩵋𤋳</li>
+                                      <li>鳥鸟</li>
+                                      <li>鹵𠧸卤</li>
+                                      <li>鹿鹿𢉖</li>
+                                      <li>麥麦</li>
+                                      <li>麻</li>
+                                      <li>黃黄</li>
+                                      <li>黍</li>
+                                      <li>黒黑𪐗</li>
+                                      <li>黹</li>
+                                      <li>黽黾</li>
+                                      <li>鼎𪔂</li>
+                                      <li>鼓鼔𡔷</li>
+                                      <li>鼠鼡</li>
+                                      <li>鼻</li>
+                                      <li>齊𪗄齐</li>
+                                      <li>齒齿𣦋</li>
+                                      <li>龍龍龙</li>
+                                      <li>龜龜龜𪚦龟𪛉</li>
+                                      <li>龠</li>
+                                    </div>
+                                  </div>
+                                  </ol>    
+                              </div>
+                            </div> 
+    </div>
+
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+<script>
+    document.getElementById('about').classList.add('active');
+
+    var language = {
+      en: ["A method of ordering Chinese characters using structural sequences of their components",
+      "Boris Klimenko",
+      "The issue of ordering Chinese characters in dictionaries remains problematic. Despite the fact that most characters contain regularly occurring components consisting of several elements, there have been no ordering methods that would be able to group characters with common components together and automate such ordering with the help of the standard sorting procedure. This project aims at providing such a method.",
+      "A character can consist of two types of components: radicals and other characters. Radicals (Kangxi character keys) comprise a set of 214 characters, arranged in ascending order of the number of strokes. In addition to the standard style adopted in the Kangxi dictionary, many radicals have several other variants used in individual characters. For example, the standard style radical 人 can be represented in characters as 亻, the radical 乙 as 乚, the radical 手 as 扌, etc. However, the structural sequences used for character ordering (discussed below) employ only standard variants of radicals, while alternative styles are used only in characters themselves. The complete list of standard and nonstandard options of radical styles is given in the Appendix. Radicals, together with their variants, are assumed here to be the smallest indivisible unit of the structure of any character.",
+      "The structural sequence of a character is the combination of radicals and characters included in it ordered in the manner described below.",
+      "Characters with the simplest structure contain only two radicals. The structural sequence of the components of a two-radical character consists of the two radicals included in it in their standard style and the character itself. The character itself is included in the sequence in order to differentiate the structural sequences of different characters consisting of the same radicals, for example:",
+      "In two-radical characters with horizontal or vertical arrangement of radicals, the left or the bottom radical is assumed to be the first element of the structural sequence, while the right or top radical is assumed to be the second one.",
+      "When a character is formed through insertion of one radical into another (e.g. 冂 一 𠔼, 囗 靑 圊) or their intersection (e.g. 囗 丨 中, 亠 冂 丹, 二 冂 冄), the following rule applies. The first radical of the sequence is the radical that forms the leftmost or bottom part of the character (with priority given to the left side). If the top part of either of the radicals is at the top of the character, this radical is the second one: (e.g. 一 木 未, 一 木 末, 一 木本). Radicals located within a closed radical are placed second (e.g. 卩 丶 卪, 囗 人 囚, 尸 丨 𠃜). Radicals with an open right bottom part go first in the sequence (e.g. 尸 二 𡰥, 广 匕 庀, 疒 匕 疕, 疒 矢 疾). Radicals that do not have an open bottom part in their standard style but partially compress in a manner that creates such a part when combined with another radical are placed second in the sequence (e.g. 火 鹿 麃, 石 麻 磨, 禾 鹿 麇).",
+      "Decomposition of most two-radical characters into component radicals is straightforward. Ambiguous cases are resolved with the help of the rare variants of radical styles, whose complete list is given in the Appendix.",
+      "Two-radical characters comprise about 18% (1,808 characters) of the character sample used here (10,181 characters, not including 214 radicals).",
+      "38% of two-radical characters (683 characters) are components of other more complex characters. The following is a complete list of structural sequences of such characters (6.7% of the total number of characters), arranged in ascending order of the numbers of the two component radicals:",
+      "Two-radical roots",
+      "Each character from the list above is included in some other characters. For instance, 斬 is part of the following more complex characters:",
+      "Structural sequences of each character from this list begin with a structural sequence of the two-radical character included in each of them, i.e. 車 斤 斬.",
+      "For instance, the structural sequence of the character 塹 starts with the structural sequence of the character 斬, i.e. 車 斤 斬, followed by the radical 土 and concluded with the final character itself: 車 斤 斬 土 塹.",
+      "Another example is the character 鏨, which has the following structural sequence: the radical 金 is added to the structural sequence of the common element, i.e. 車 斤 斬, followed by the character 鏨 itself: 車 斤 斬 金 鏨.",
+      "Below are several more examples of structural sequences of different characters:",
+      "The lists above are sorted in ascending order of the numbers of all component radicals and characters (their hexadecimal Unicode codes). The output is an ordered list of characters containing the two-radical character 斬:",
+      "Structural sequences of all characters that include two-radical characters as their components are formed in the same manner.",
+      "Sorting all such structural sequences results in the following set of lists for each two-radical character (indicated at the beginning of each list), covering 80% of the character sample:",
+      "Trees stemming from two-radical roots",
+      "As a result of this procedure, 80% of all characters are arranged in an ordered sequence.",
+      "The remaining 20% include two-radical characters that are not included in any other character (11%), characters whose common element consists of three or more radicals, rather than only two (8.8%), and single characters of three or more radicals (0.2%).",
+      "The following list shows structural sequences of two-radical characters that are not included in any other character as a component (11% of the total number of characters):",
+      "Two-radical stumps",
+      "The last group (8.8% of the total) consists of characters whose common element is formed of three or more radicals, and single characters that are formed of three or more radicals but not included in any other characters as a common element (0.2%).",
+      "Structural sequences of characters consisting of three or more radicals are formed based on the position of the radicals within the character. The sequence starts with the leftmost or bottom radical and proceeds in the direction of the nearest radical adjacent to it.",
+      "The list of structural sequences of characters with three or more radicals, together with characters that include them as their common element, is given below:",
+      "Trees stemming from roots composed of three or more radicals",
+      "The following is the list of single characters consisting of three or more radicals that are not included in any other character as their common element:",
+      "Three or more-radical stumps",
+      "The algorithm presented above orders 100% of the characters. The place of each character is determined by the order of the radicals (radical numbers) in their structural sequences sorted together (for two-radical roots, including two-radical single characters) and roots having 3 or more radicals (including single characters).",
+      "The ordering using structural sequences reveals several features of the entire set of characters.",
+      "A group of characters that makes up 7.4% of the total number of characters (763 out of 10181) consists of characters that are included as a common element in 89% of all characters (characters of this group are part of one to over 200 other characters). Characters from this group are referred to as “roots” hereafter. Sequences of characters including any of such roots are labelled as “trees”.",
+      "This way of ordering characters is different from the existing methods employed in dictionaries. In dictionaries built according to the Russian graphic system, for example (Oshanin 1983), characters are ordered by the type of the element located in the bottom right corner of the character. This method does not allow to group characters with a common element together, thus overlooking the tree-like structure of such character groups, which, when ordered by their structural sequences, represent trees having a trunk root, trunk, branch roots, and branches.",
+      "In addition, such groups in (Oshanin 1983) do not include all the characters that include the common element, because they contain only characters with the same stroke in the bottom right corner: e.g. the sequence 酋 崷 鞧 輶 猶 蕕 楢 緧 鰌 蝤 contains characters that include the character 酋 in (Oshanin 1983, vol. 2: 705–706). The remaining characters that contain the same character as their common element are scattered across different volumes and pages of the dictionary:",
+      "奠 - Volume 3, Page 636",
+      "鄭 - Volume 2, Page 788",
+      "擲 - Volume 2, Page 789",
+      "尊 - Volume 3, Page 53",
+      "僔 - Volume 3, Page 55",
+      "撙 - Volume 3, Page 55",
+      "樽 - Volume 3, Page 55",
+      "蹲 - Volume 3, Page 55",
+      "遵 - Volume 4, Page 118",
+      "鐏 - Volume 3, Page 54",
+      "鱒 - Volume 3, Page 55",
+      "鷷 - Volume 3, Page 516",
+      "猷 - Volume 3, Page 648",
+      "遒 - Volume 4, Page 100",
+      "Ordering by structural sequences arranges all characters with the same root in one group, regardless of what stroke is located in their bottom right corner:",
+      "Here, 酋 is the root of the tree, consisting of two radicals 酉 and 八;",
+      "      奠 鄭 尊 崷 楢 猶 猷 緧 蝤 輶 遒 鞧 鰌 is the tree trunk;",
+      "	  鄭, 尊, 猶 are branch roots;",
+      "      擲, 僔 撙 樽 蹲 遵 鐏 鱒 鷷, 蕕 are the branches.",
+      "Tree structures are formed automatically when characters are ordered according to their structural sequences. In the illustrations of the tree composition for all the roots given in this description, the trees are shown in the form of lists of characters without highlighting the branches (the branches are included in the tree trunks directly behind the roots of the branches). The following is an illustration of a linear structure of a tree with branches enclosed in square brackets:",
+      "Structural sequences allow to place each character in its unique position within a tree, as well as make search for any character in trees of any size faster. This leads to the possibility to significantly improve the usability of printed dictionaries and simplify the algorithms in their electronic implementation.",
+      "Basing a dictionary on roots ordered by their structural sequences allows to improve the structure of printed dictionaries, and organize their table of contents in a more convenient form. This can greatly improve the whole process of character search. Examples of such a table of contents are given above. Single characters that are not included in any others are referred to as single roots (single pairs — in the case of a two-radical root). They are also included in the general sequence of roots in the dictionary table of contents.",
+      "Both in electronic and printed dictionaries, this root ordering method allows to arrange all roots (both forming trees and single) in a matrix, (given that the vast majority of such roots consist of two radicals), which is the most rational structure in this case from the point of view of ease of processing and perception.",
+      "The roots are placed in a 214x214 matrix (total number of the radicals). The row and column indices in the matrix are the radicals ordered in ascending order of their numbers. Each root in the matrix is either associated with a corresponding tree or is a single.",
+      "The root matrix allows to arrange 100% of characters to be included in a dictionary, regardless of their total number.",
+      "The position of roots in the matrix is based on their structural sequences. For two-radical roots, the first radical defines the row, while the second one defines the column. Roots consisting of more than two radicals are placed in several matrix cells depending on the number of their radicals that are pairwise adjacent to each other. For example, the root 眞 with the structural sequence 八 乙 目 匕 眞 is placed in three cells: 12 八 - 5 乙, 5 乙 - 109 目 and 109 目 - 21 匕, where the number stands for the radical number.",
+      "The order of radicals within a structural sequence can be different. The first radical in the sequence may be the leading radical of the root. It is possible to put in the first place the radical located in the top or rightmost part of the character. Any other conditions for their location can be added in the case of insertion or intersection of radicals or when there are three or more radicals in the root. However, all these modifications will only change the distribution of roots in the matrix, without changing the composition and structure of trees. But they will violate the natural logic of constructing structural sequences of roots, which locates the roots along the rows and columns of the matrix and does not require additional information about leading radicals of each character.",
+      "Literature:",
+      "1. Oshanin, I. M. 1983. Large Sino-Russian Dictionary. Moscow: Nauka.",
+      "Appendix:",
+      "List of radicals with variants of styles in Chinese characters"
+      ],
+
+      ru: ["Способ упорядочения иероглифов при помощи структурных последовательностей их компонентов",
+      "Борис Клименко",
+      "Проблема упорядочения китайских иероглифов в иероглифических словарях является до сих пор не разрешенной полностью задачей. Несмотря на наличие в большинстве иероглифов повторяющихся компонентов, состоящих из нескольких элементов, не существует способа упорядочения, который позволил бы сгруппировать иероглифы с повторяющимися частями и автоматизировать это упорядочение при помощи обычной процедуры сортировки. Попытка решить эту задачу представлена в настоящей работе.",
+      "Компонентами иероглифа могут быть радикалы и другие иероглифы. Радикалы (иероглифические ключи Канси) - набор из 214 символов, упорядоченных в порядке увеличения числа черт. Многие радикалы имеют, кроме их стандартного начертания, принятого в словаре Канси, несколько вариантов начертания в составе иероглифов. Например, радикал со стандартным начертанием 人 в составе иероглифов может изображаться как 亻, радикал 乙 - как 乚, радикал 手 - как 扌 и т.д. Однако в структурных последовательностях для упорядочения иероглифов используются только стандартные изображения радикалов, а варианты альтернативных начертаний используются только в самих иероглифах. Полный список стандартных и нестандартных вариантов начертаний радикалов приведен в Приложении. Принято, что радикалы являются наименьшей неделимой единицей структуры любого иероглифа с учетом вариантов их начертаний в составе иероглифов.",
+      "Структурная последовательность компонентов иероглифа - совокупность радикалов и иероглифов, входящих в него, расположенных в определенном порядке, изложенном ниже.",
+      "Самыми простыми иероглифами являются двухрадикальные. Структурная последовательность компонентов двухрадикального иероглифа состоит из двух радикалов, входящих в него в их стандартном начертании, и самого двухрадикального иероглифа. Сам иероглиф включается для дифференциации структурных последовательностей иероглифов с одинаковыми радикалами:       丿丿乂, 丿丿𠂆, 一木未, 一木末, 一木本 и др.",
+      "Принято, что первым радикалом структурной последовательности  двухрадикального иероглифа при горизонтальном или вертикальном расположении радикалов будет его левый или нижний радикал, а правый или верхний - вторым. ",
+      "При совмещении (вложении - расположении одного радикала внутри другого : 冂一𠔼, 囗靑圊) или пересечении радикалов (囗丨中, 亠冂丹, 二冂冄) действует правило: первым (левым) будет радикал, который формирует крайнюю левую или нижнюю часть иероглифа (с приоритетом левой части). Если крайняя верхняя часть одного из радикалов находится вверху иероглифа, этот радикал будет вторым (правым): (一木未, 一木末, 一木本). Радикалы, р	асположенные внутри замкнутого радикала будут располагаться справа (卩丶卪, 囗人囚, 尸丨𠃜). Радикалы, которые имеют открытую правую нижнюю часть при совмещении будут слева (尸二𡰥, 广匕庀, 疒匕疕, 疒矢疾). Радикалы, которые в стандартном виде не имеют открытой нижней части но при совмещении частично сжимаются - будут располагаться справа (火鹿麃, 石麻磨, 禾鹿麇).",
+      "Декомпозиция большинства двухрадикальных иероглифов на составляющие радикалы не представляет затруднений, ввиду ее очевидности. Встречающиеся неоднозначные варианты декомпозиции разрешаются с учетом редких вариантов начертания радикалов, полный перечень которых приведен в Приложении.",
+      "Количество двухрадикальных иероглифов в принятой выборке иероглифов (10181, не считая 214 радикалов) составляет около 18% (1808).",
+      "38% (683) двухрадикальных иероглифов являются компонентами других, более сложных иероглифов. Полный список структурных последовательностей для таких иероглифов (6,7% от общего числа иероглифов), упорядоченый по возрастанию номеров двух радикалов:",
+      "Корни из двух радикалов",
+      "Каждый иероглиф из этого списка входит в другие иероглифы. Так, 斬 является частью следующих более сложных иероглифов:",
+      "Структурные последовательности каждого иероглифа из этого списка будут начинаться со структурной последовательности для двухрадикального иероглифа, входящего в каждый из них: 車斤斬.",
+      "Для иероглифа 塹 добавляем к 車斤斬 радикал 土 и включаем сам иероглиф, как окончание структурной последовательности: 車斤斬土塹.",
+      "Для иероглифа 鏨: добавляем к 車斤斬 радикал 金, включаем в конце 鏨: 車斤斬金鏨.",
+      "Ниже приведены примеры структурных последовательностей еще для нескольких иероглифов:",
+      "Полученные списки сортируем в порядке возрастания номеров всех входящих радикалов и иероглифов (их шестнадцатеричных кодов Unicode) и получаем упорядоченный список иероглифов, содержащих двухрадикальный иероглиф 斬:",
+      "Так же формируются структурные последовательности для всех иероглифов, в которые входят двухрадикальные иероглифы.",
+      "Сортировка всех полученных структурных последовательностей дает следующий набор списков для каждого двухрадикального иероглифа, который находится в начале каждого списка (80% от общего числа иероглифов):",
+      "Деревья, производные от корней из двух радикалов",
+      "В результате оказываются упорядоченными 80% всех иероглифов.",
+      "Оставшиеся 20% состоят из двухрадикальных иероглифов, которые не входят ни в какие другие (11%) и иероглифы, в составе которых повторяющийся элемент содержит не два, а три радикала или больше (8,8%) и одиночные иероглифы из трех и более радикалов (0,2%).",
+      "Структурные последовательности для двухрадикальных иероглифов, которые не входят ни в какие другие (11% от общего числа иероглифов):",
+      "Иероглифы из двух радикалов, не образующие деревьев",
+      "Последнюю группу составляют иероглифы (9% от общего количества), в которых повторяющаяся часть состоит из 3 и более радикалов, и одиночные иероглифы, состоящие из 3 и более радикалов, не входящие ни в какие другие.",
+      "Структурные последовательности для иероглифов, состоящих из трех и более радикалов формируются в зависимости от расположения радикалов в иероглифе, начиная с крайнего левого или нижнего радикала, в направлении ближайшего примыкающего к нему радикала.",
+      "Иероглифы со структурными последовательностями, состоящие из трех и более радикалов и списки иероглифов, в которые они входят:",
+      "Деревья, производные от корней из трех или более радикалов",
+      "Одиночные иероглифы из трех и более радикалов, не входящие ни в какие другие:",
+      "Иероглифы из трех или более радикалов, не образующие деревьев",
+      "Таким образом, упорядочены 100% иероглифов, при этом место каждого определяется порядком радикалов (номеров радикалов) в их структурных последовательностях, отсортированных совместно (для двухрадикальных корней, в том числе двухрадикальных одиночных пар) и корней, имеющих 3 и более радикалов (в том числе одиночных).",
+      "Результаты упорядочения иероглифов с применением структурных последовательностей выявляют несколько особенностей всей совокупности иероглифов.",
+      "Существует особая группа иероглифов, составляющая 7,4% от общего числа иероглифов (763 из 10181), которая участвует в упорядочении 89% всех иероглифов (иероглифы этой группы входят в состав от одного до 200 и более других иероглифов). Назовем иероглифы этой группы «корнями», входящими в состав иероглифов, последовательности которых назовем «деревьями».",
+      "В словарях, построенных по русской графической системе, например (Ошанин 1983), иероглифы упорядочены по виду элементарной черты, которая находится в правом нижнем углу иероглифа, из-за чего существующие там группы иероглифов, включающих в себя повторяющиеся элементы, не выявляют их древовидной структуры, которая при упорядочении по структурным последовательностям представляет деревья, имеющие корень ствола, ствол, корни ветвей и ветви.",
+      "Кроме того, в такие группы в (Ошанин 1983) входят далеко не все иероглифы, в которые входит повторяющийся элемент, т.к. в них присутствуют только иероглифы с одинаковой чертой в правом нижнем углу: 酋 崷 鞧 輶 猶 蕕 楢 緧 鰌 蝤 - последовательность иероглифов в которые входит иероглиф 酋 в (Ошанин 1983, т. 2Ж 705–706). Остальные иероглифы, которые содержат 酋 разбросаны по разным томам и страницам словаря:",
+      "奠 - том 3, стр. 636",
+      "鄭 - том 2, стр. 788",
+      "擲 - том 2, стр. 789",
+      "尊 - том 3, стр. 53",
+      "僔 - том 3, стр. 55",
+      "撙 - том 3, стр. 55",
+      "樽 - том 3, стр. 55",
+      "蹲 - том 3, стр. 55",
+      "遵 - том 4, стр. 118",
+      "鐏 - том 3, стр. 54",
+      "鱒 - том 3, стр. 55",
+      "鷷 - том 3, стр. 516",
+      "猷 - том 3, стр. 648",
+      "遒 - том 4, стр. 100",
+      "Упорядочение по структурным последовательностям собирает в одно дерево все иероглифы, в которые входит его корень вне зависимости от того, какая элементарная черта стоит в их правом нижнем углу:",
+      "здесь 酋 - корень дерева, состоящий из двух радикалов 酉 и 八;",
+      "      奠 鄭 尊 崷 楢 猶 猷 緧 蝤 輶 遒 鞧 鰌 - ствол дерева;",
+      "	鄭, 尊, 猶- корни ветвей;",
+      "      擲, 僔 撙 樽 蹲 遵 鐏 鱒 鷷, 蕕 - ветви.",
+      "Древовидные структуры формируются автоматически при упорядочении иероглифов по их структурным последовательностям. В иллюстрациях состава деревьев для всех корней, приведенных в данном описании, деревья изображены в виде списков иероглифов без выделения ветвей (ветви включены в стволы деревьев непосредственно за корнями ветвей). При выделении ветвей квадратными скобками линейная структура дерева будет выглядеть:",
+      "Упорядочение иероглифов внутри дерева по структурным последовательностям позволяет быстрее находить нужный иероглиф в больших деревьях и помещает каждый иероглиф на его единственно возможное место в дереве, которое определяется номером радикала, добавляемого к структурной последовательности предыдущего иероглифа. Это дает возможность существенно улучшить удобство работы с бумажными словарями и упростить алгоритмы в их электронной реализации.",
+      "Корни, упорядоченные по их структурным последовательностям позволяют улучшить структуру бумажных словарей, и выполнить их оглавления в более удобном виде, намного улучшающем поиск нужного иероглифа. Примеры такого оглавления приведены выше. Одиночные иероглифы, не входящие ни в какие другие, назовем одиночными корнями (одиночными парами - в случае двухрадикального корня); они так же включаются в общую последовательность корней в оглавлении словаря.",
+      "Для электронных (как и бумажных) словарей такое упорядочение корней позволяет поместить все корни (как имеющие деревья, так и одиночные) в матрицу (учитывая, что подавляющее большинство таких корней - двухрадикальные), как наиболее рациональную структуру с точки зрения удобства обработки и восприятия.",
+      "Корни помещаются в матрицу размерностью 214х214 (общее количество радикалов), индексами строк и столбцов которой являются упорядоченные в порядке возрастания номеров радикалы. Каждый корень в такой матрице связан с соответствующим деревом или является одиночным.",
+      "Матрица корней позволяет объединить в себе 100% иероглифов, вне зависимости от их общего количества, которое может быть включено в словарь.",
+      "Размещение корней в матрице основано на их структурных последовательностях. Для двухрадикальных корней первый радикал представляет строку, второй - столбец. Корни, имеющие более двух радикалов в структурной последовательности, помещаются в несколько ячеек матрицы в зависимости от количества попарно примыкающих друг к другу радикалов в таком корне. Например, корень 眞, имеющий структурную последовательность 八乙目匕眞 будет располагаться в трех ячейках: 12八 - 5乙, 5乙 - 109目 и 109目 - 21匕.",
+      "Порядок радикалов в структурной последовательности для корней может быть различным. Первым в ней может быть ведущий радикал корня. Возможно поставить на первое место радикал, который находится в верхней или правой части иероглифа, добавить любые другие условия их расположения в случае совмещения или пересечения радикалов или наличия трех и более радикалов в корне. Однако все эти модификации будут изменять только распределение корней в матрице, не меняя состав и структуру деревьев, но нарушат естественную логику построения структурных последовательностей корней, которая ориентирует корни по строкам и столбцам матрицы и не требует знания дополнительной информации о ведущих радикалах каждого иероглифа.",
+      "Литература:",
+      "1. Ошанин И. М. 1983. Большой китайско-русский словарь. М.: Наука.",
+      "Приложение:",
+      "Список радикалов с вариантами начертаний в составе иероглифов"
+      ]
+    };
+
+    var textToTranslate = document.getElementsByName("lang");
+
+    Ru.onclick = function() {
+      <!-- title.textContent = language.ru.title; -->
+      for (let i = 0; i < textToTranslate.length; i++) {
+        textToTranslate[i].textContent = language.ru[i];
+      }
+    };
+    En.onclick = function() {
+      for (let i = 0; i < textToTranslate.length; i++) {
+        textToTranslate[i].textContent = language.en[i];
+      }
+    };
+</script>
+{% endblock %}
+
