@@ -13,7 +13,5 @@ if not SECRET_KEY:
     raise ValueError("No SECRET_KEY set for Flask application")
 
 ###Database setup###
-# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:suckMY666123@localhost/Kangxi?charset=utf8mb4'
-# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://kangximaster:suckMyKangxi@mysql.hanzi-trees.bugsatemycode.com/hanzi_trees?charset=utf8mb4'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(basedir, 'kangxi.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
